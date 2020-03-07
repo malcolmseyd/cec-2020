@@ -1,5 +1,5 @@
 import os, sys
-
+from Drone import Drone
 # plot3d() inspired by: https://stackoverflow.com/questions/38086972/stacked-3d-bar-chart-with-matplotlib
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
@@ -102,7 +102,7 @@ def read_file(filename):
     # we spent some time tracing, somewhere we flipped, whoops
     return (scram, unscram, size)
 
-def plot3d(map3d, size, scale):
+def plot3d(map3d, size, scale, drone: Drone):
 
     fig = plt.figure()
     ax = fig.add_subplot(scale, projection = "3d")
@@ -114,7 +114,7 @@ def plot3d(map3d, size, scale):
     ax.set_ylim3d(0,size) 
     ax.set_zlim3d(0,size) 
 
-    alpha_base=1
+    alpha_base=0.1
     
     xpos = [] #x coordinates of each bar
     ypos = [] #y coordinates of each bar
@@ -139,6 +139,17 @@ def plot3d(map3d, size, scale):
     dy = np.ones(1) #depth of each bar
     dz = np.ones(1) #height of each bar
 
+    if drone:
+        xpos.append(drone.x)
+        ypos.append(drone.y)
+        zpos.append(drone.z)
+        
+        colors.append((0, 0, 0, 1))
+
+        np.append(dx, 0.5)
+        np.append(dy, 0.5)
+        np.append(dz, 0.5)
+
     ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color=colors)
 
 
@@ -154,7 +165,7 @@ def plot3d_highlight(map3d, size, scale, hx, hy, hz ):
     ax.set_ylim3d(0,size) 
     ax.set_zlim3d(0,size) 
 
-    alpha_base=0.3
+    alpha_base=0.1
     alpha_highlighted=1
     
     xpos = [] #x coordinates of each bar
