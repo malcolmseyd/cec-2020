@@ -26,25 +26,25 @@ class Drone:
 
     def moveright(self, image):
         self.x = self.x + 1
-        self.movetop(image)
+        self.z = self.movetop(image)
         return 1
     def moveleft(self, image):
         self.x = self.x - 1
-        self.movetop(image)
+        self.z = self.movetop(image)
         return 1
     def moveup(self, image):
         self.y = self.y + 1
-        self.movetop(image)
+        self.z = self.movetop(image)
         return 1
     def movedown(self, image):
         self.y = self.y - 1
-        self.movetop(image)
+        self.z = self.movetop(image)
         return 1
     def movetop(self, image):
         newZ = self.max - 1
         while(image[self.x][self.y][newZ] == None):
             newZ = newZ - 1
-        self.z = newZ
+        return newZ
 
     def pickup(self, color):
         # remove picked up block from the current image
@@ -67,12 +67,13 @@ class Drone:
             return 3
     def dropoff(self, color):
         # add dropped off block to the current image
+        self.z = self.z + 1
         self.curr_image[self.x][self.y][self.z] = color
 
         count = self.storageHopper.get(color)
         count = count - 1
         self.storageHopper[color] = count
-        self.z = self.z + 1
+        
         self.inStorage = self.inStorage - 1
         if color == self.lastTouchedBlock:
             self.lastTouchedBlock = color
