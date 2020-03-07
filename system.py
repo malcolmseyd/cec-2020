@@ -142,7 +142,7 @@ def plot3d(map3d, size, scale, drone: Drone):
     if drone:
         xpos.append(drone.x)
         ypos.append(drone.y)
-        zpos.append(drone.z)
+        zpos.append(drone.z+1)
         
         colors.append((0, 0, 0, 1))
 

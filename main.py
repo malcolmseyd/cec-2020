@@ -23,6 +23,7 @@ def main():
     #plt.show()
 
     system.plot3d(drone.curr_image, size, 111, drone)
+    plt.title("Hey you cats")
     plt.savefig(f"{base_filename}.png")
     time.sleep(WAIT)
     #plt.draw()
@@ -36,6 +37,7 @@ def main():
 
     time.sleep(WAIT)
     system.plot3d(drone.curr_image, size, 111, drone)
+    plt.title("Check this out")
     plt.savefig(f"{base_filename}.png")
     time.sleep(WAIT)
     #plt.draw()
@@ -45,6 +47,7 @@ def main():
     drone.pickup(block_color)
 
     system.plot3d(drone.curr_image, size, 111, drone)
+    plt.title("BOOM!")
     plt.savefig(f"{base_filename}.png")
     #time.sleep(WAIT * 3)
     #plt.draw()
