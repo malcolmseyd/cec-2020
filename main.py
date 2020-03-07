@@ -1,6 +1,6 @@
 import os
 
-# Plotting stuff inspired by: https://stackoverflow.com/questions/38086972/stacked-3d-bar-chart-with-matplotlib
+# plot3d() inspired by: https://stackoverflow.com/questions/38086972/stacked-3d-bar-chart-with-matplotlib
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
@@ -115,7 +115,7 @@ def plot3d(map3d, size, scale):
     ax.set_ylim3d(0,size) 
     ax.set_zlim3d(0,size) 
 
-    alpha_base=0.5
+    alpha_base=1
     
     xpos = [] #x coordinates of each bar
     ypos = [] #y coordinates of each bar

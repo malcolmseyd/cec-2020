@@ -1,3 +1,4 @@
+# What we based plot3d() off of, from https://stackoverflow.com/questions/38086972/stacked-3d-bar-chart-with-matplotlib
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
