@@ -24,21 +24,21 @@ class Drone:
                 self.needs[i].append([])
                 self.notNeeds[i].append([])
 
-    def moveright(self, image):
+    def moveright(self):
         self.x = self.x + 1
-        self.z = self.movetop(image)
+        self.z = self.movetop(self.curr_image)
         return 1
-    def moveleft(self, image):
+    def moveleft(self):
         self.x = self.x - 1
-        self.z = self.movetop(image)
+        self.z = self.movetop(self.curr_image)
         return 1
-    def moveup(self, image):
+    def moveup(self):
         self.y = self.y + 1
-        self.z = self.movetop(image)
+        self.z = self.movetop(self.curr_image)
         return 1
-    def movedown(self, image):
+    def movedown(self):
         self.y = self.y - 1
-        self.z = self.movetop(image)
+        self.z = self.movetop(self.curr_image)
         return 1
     def movetop(self, image):
         newZ = self.max - 1
@@ -81,9 +81,9 @@ class Drone:
         else:
             self.lastTouchedBlock = color
             return 3
-    def scan(self, image):
+    def scan(self):
         #using self x, y, z
-        return image[self.x][self.y][self.z]
+        return curr_image[self.x][self.y][self.z]
 
 
 
