@@ -60,10 +60,10 @@ class Drone:
         self.z = self.z - 1
         self.inStorage = self.inStorage + 1
         if color == self.lastTouchedBlock:
-            self.lastTouchedBlock = color;
+            self.lastTouchedBlock = color
             return 2
         else:
-            self.lastTouchedBlock = color;
+            self.lastTouchedBlock = color
             return 3
     def dropoff(self, color):
         # add dropped off block to the current image
