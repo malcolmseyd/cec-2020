@@ -1,10 +1,9 @@
-import os
+import os, sys
 
 # plot3d() inspired by: https://stackoverflow.com/questions/38086972/stacked-3d-bar-chart-with-matplotlib
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
-import numpy as np
-
+import numpy as np  
 
 def read_file(filename):
     file = open(filename, "r")
@@ -144,14 +143,19 @@ def plot3d(map3d, size, scale):
 
 
 def main():
-    scram, unscram, size = read_file("./case/hard.txt")
-    print("Sorted: " + str(scram))
-    print("\nUnsorted: " + str(unscram))
+    #print(sys.argv)
+    if len(sys.argv) != 2:
+        print("Usage: python main.py [PATH/FILENAME.txt]")
+        exit(0)
+
+    scram, unscram, size = read_file(sys.argv[1])
+    #print("Sorted: " + str(scram))
+    #print("\nUnsorted: " + str(unscram))
     
     plot3d(scram, size, 111)
     plot3d(unscram, size, 111)
 
-    plt.gca().invert_xaxis()
+    #plt.gca().invert_xaxis()
     plt.show()
 
 
