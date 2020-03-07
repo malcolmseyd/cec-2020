@@ -1,10 +1,10 @@
 import numpy as np
 
 class Drone:
-    def __init__(self, n):
+    def __init__(self, n, image):
         self.x = 0
         self.y = 0
-        self.z = 0
+        self.z = self.movetop(image)
         self.max = n
         self.storageHopper = {}
         self.inStorage = 0
