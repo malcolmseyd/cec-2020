@@ -1,5 +1,11 @@
 import os
 
+# Plotting stuff inspired by: https://stackoverflow.com/questions/38086972/stacked-3d-bar-chart-with-matplotlib
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+import numpy as np
+
+
 def read_file(filename):
     file = open(filename, "r")
     lines = file.readlines()
@@ -21,12 +27,10 @@ def read_file(filename):
     for l in lines:
 
         if l == "scrambled_image":
-            mode = "std"
-            idx = 0
+            mode = "scram"
             continue
         elif l ==  "unscrambled_image":
-            mode = "unstd"
-            idx = 0
+            mode = "unscram"
             continue
         elif l[0:4] == "size":
             size = int(l[5:])
@@ -37,28 +41,25 @@ def read_file(filename):
             continue
 
         #print(l)
-        if mode == "std":
+        if mode == "scram":
             r = l.split("=")
             #print(r)
             s_xyz.append(r[0]) 
             s_rgb.append(r[1][1:-1]) # Remove quotes
-            idx += 1
-        elif mode == "unstd":
+        elif mode == "unscram":
             r = l.split("=")
             #print(r)
             u_xyz.append(r[0]) 
             u_rgb.append(r[1][1:-1]) # Remove quotes
-            idx += 1
     #print(s_xyz)
     #print(s_rgb)
     #print(u_xyz)
     #print(u_rgb)
-    std = [[ [None for k in range(size)] for j in range(size)] for i in range(size)]
-    unstd = [[ [None for k in range(size)] for j in range(size)] for i in range(size)]
 
+    scram = [[ [None for k in range(size)] for j in range(size)] for i in range(size)]
+    unscram = [[ [None for k in range(size)] for j in range(size)] for i in range(size)]
 
-
-    #print(std)
+    #print(scram)
 
     for i in range(0, len(s_xyz)):
         coord = s_xyz[i].split(",")
@@ -78,7 +79,7 @@ def read_file(filename):
 
         #print(coord)
         #print(colors)
-        std[x][y][z] = (r, g, b) 
+        scram[x][y][z] = (r, g, b) 
 
     for i in range(0, len(u_xyz)):
         coord = u_xyz[i].split(",")
@@ -98,16 +99,100 @@ def read_file(filename):
 
         #print(coord)
         #print(colors)
-        unstd[x][y][z] = (r, g, b)
+        unscram[x][y][z] = (r, g, b)
+    # we spent some time tracing, somewhere we flipped, whoops
+    return (scram, unscram, size)
 
-    return (std, unstd)
+def plot3d(map3d, size, plot):
 
+    fig = plt.figure()
+    ax = fig.add_subplot(211, projection = "3d")
+    
+    ax.set_xlabel("x")
+    ax.set_ylabel("y") 
+    ax.set_zlabel("z")
+    ax.set_xlim3d(0,size)
+    ax.set_ylim3d(0,size) 
+    ax.set_zlim3d(0,size) 
+
+    alpha_base=0.5
+    
+    xpos = [] #x coordinates of each bar
+    ypos = [] #y coordinates of each bar
+    zpos = [] #z coordinates of each bar
+    colors = []
+    
+    for x in range(0, size):
+        for y in range(0, size):
+            for z in range(0, size):
+                if map3d[x][y][z] != None:
+                    xpos.append(x)
+                    ypos.append(y)
+                    zpos.append(z)
+                    
+                    r = map3d[x][y][z][0] / 255
+                    g = map3d[x][y][z][1] / 255
+                    b = map3d[x][y][z][2] / 255
+
+                    colors.append((r, g, b, alpha_base))
+
+    dx = np.ones(1) #width of each bar
+    dy = np.ones(1) #depth of each bar
+    dz = np.ones(1) #height of each bar
+
+    ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color=colors)
 
 
 def main():
-    std, unstd = read_file("./case/easy.txt")
-    print("Sorted: " + str(std))
-    print("\nUnsorted: " + str(unstd))
+    scram, unscram, size = read_file("./case/easy.txt")
+    print("Sorted: " + str(scram))
+    print("\nUnsorted: " + str(unscram))
+    
+    #plot3d(scram, size, 212)
+    #plot3d(unscram, size, 211)
+
+    map3d = scram
+                    
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection = "3d")
+    
+    ax.set_xlabel("x")
+    ax.set_ylabel("y") 
+    ax.set_zlabel("z")
+    ax.set_xlim3d(0,size)
+    ax.set_ylim3d(0,size) 
+    ax.set_zlim3d(0,size) 
+
+    alpha_base=0.5
+    
+    xpos = [] #x coordinates of each bar
+    ypos = [] #y coordinates of each bar
+    zpos = [] #z coordinates of each bar
+    colors = []
+    
+    for x in range(0, size):
+        for y in range(0, size):
+            for z in range(0, size):
+                if map3d[x][y][z] != None:
+                    xpos.append(x)
+                    ypos.append(y)
+                    zpos.append(z)
+                    
+                    r = map3d[x][y][z][0] / 255
+                    g = map3d[x][y][z][1] / 255
+                    b = map3d[x][y][z][2] / 255
+
+                    colors.append((r, g, b, alpha_base))
+
+    dx = np.ones(1) #width of each bar
+    dy = np.ones(1) #depth of each bar
+    dz = np.ones(1) #height of each bar
+
+    ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color=colors)
+
+    plt.gca().invert_xaxis()
+    plt.show()
+
 
 if __name__ == "__main__":
     main()
