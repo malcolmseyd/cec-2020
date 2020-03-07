@@ -12,6 +12,7 @@ class Drone:
         self.needs = []
         self.notNeeds = []
         self.cubes = []
+        self.curr_image = image
         self.hopperMax = np.floor(np.sqrt(n * n * n) / 2)
         self.lastTouchedBlock = None
         for i in range(0, n):
@@ -46,6 +47,9 @@ class Drone:
         self.z = newZ
 
     def pickup(self, color):
+        # remove picked up block from the current image
+        self.curr_image[self.x][self.y][self.z] = None
+
         if color in self.storageHopper:
             count = self.storageHopper.get(color)
             count = count + 1
@@ -62,6 +66,9 @@ class Drone:
             self.lastTouchedBlock = color;
             return 3
     def dropoff(self, color):
+        # add dropped off block to the current image
+        self.curr_image[self.x][self.y][self.z] = color
+
         count = self.storageHopper.get(color)
         count = count - 1
         self.storageHopper[color] = count
@@ -76,6 +83,7 @@ class Drone:
     def scan(self, image):
         #using self x, y, z
         return image[self.x][self.y][self.z]
+
 
 
 
