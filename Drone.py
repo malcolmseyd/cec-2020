@@ -20,8 +20,8 @@ class Drone:
             self.cubes.append([])
             for j in range(0, n):
                 self.cubes[i].append([])
-                self.needs.append([])
-                self.notNeeds.append([])
+                self.needs[i].append([])
+                self.notNeeds[i].append([])
 
     def moveright(self, image):
         self.x = self.x + 1
