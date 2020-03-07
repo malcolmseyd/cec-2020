@@ -142,6 +142,50 @@ def plot3d(map3d, size, scale):
     ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color=colors)
 
 
+def plot3d_highlight(map3d, size, scale, hx, hy, hz ):
+
+    fig = plt.figure()
+    ax = fig.add_subplot(scale, projection = "3d")
+    
+    ax.set_xlabel("x")
+    ax.set_ylabel("y") 
+    ax.set_zlabel("z")
+    ax.set_xlim3d(0,size)
+    ax.set_ylim3d(0,size) 
+    ax.set_zlim3d(0,size) 
+
+    alpha_base=0.3
+    alpha_highlighted=1
+    
+    xpos = [] #x coordinates of each bar
+    ypos = [] #y coordinates of each bar
+    zpos = [] #z coordinates of each bar
+    colors = []
+    
+    for x in range(0, size):
+        for y in range(0, size):
+            for z in range(0, size):
+                if map3d[x][y][z] != -1:
+                    xpos.append(x)
+                    ypos.append(y)
+                    zpos.append(z)
+                    
+                    r = map3d[x][y][z][0] / 255
+                    g = map3d[x][y][z][1] / 255
+                    b = map3d[x][y][z][2] / 255
+
+                    if hx == x and hy == y and hz == z:
+                        colors.append((r, g, b, alpha_highlighted))
+                    else:
+                        colors.append((r, g, b, alpha_base))
+
+    dx = np.ones(1) #width of each bar
+    dy = np.ones(1) #depth of each bar
+    dz = np.ones(1) #height of each bar
+
+    ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color=colors)
+
+
 def main():
     #print(sys.argv)
     if len(sys.argv) != 2:
