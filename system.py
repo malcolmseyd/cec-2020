@@ -55,8 +55,8 @@ def read_file(filename):
     #print(u_xyz)
     #print(u_rgb)
 
-    scram = [[ [None for k in range(size)] for j in range(size)] for i in range(size)]
-    unscram = [[ [None for k in range(size)] for j in range(size)] for i in range(size)]
+    scram = [[ [-1 for k in range(size)] for j in range(size)] for i in range(size)]
+    unscram = [[ [-1 for k in range(size)] for j in range(size)] for i in range(size)]
 
     #print(scram)
 
@@ -124,7 +124,7 @@ def plot3d(map3d, size, scale):
     for x in range(0, size):
         for y in range(0, size):
             for z in range(0, size):
-                if map3d[x][y][z] != None:
+                if map3d[x][y][z] != -1:
                     xpos.append(x)
                     ypos.append(y)
                     zpos.append(z)
