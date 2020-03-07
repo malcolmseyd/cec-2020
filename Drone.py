@@ -42,13 +42,13 @@ class Drone:
         return 1
     def movetop(self, image):
         newZ = self.max - 1
-        while(image[self.x][self.y][newZ] == None):
+        while(image[self.x][self.y][newZ] == -1):
             newZ = newZ - 1
         return newZ
 
     def pickup(self, color):
         # remove picked up block from the current image
-        self.curr_image[self.x][self.y][self.z] = None
+        self.curr_image[self.x][self.y][self.z] = -1
 
         if color in self.storageHopper:
             count = self.storageHopper.get(color)
