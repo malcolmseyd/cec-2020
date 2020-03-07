@@ -103,10 +103,10 @@ def read_file(filename):
     # we spent some time tracing, somewhere we flipped, whoops
     return (scram, unscram, size)
 
-def plot3d(map3d, size, plot):
+def plot3d(map3d, size, scale):
 
     fig = plt.figure()
-    ax = fig.add_subplot(211, projection = "3d")
+    ax = fig.add_subplot(scale, projection = "3d")
     
     ax.set_xlabel("x")
     ax.set_ylabel("y") 
@@ -144,51 +144,12 @@ def plot3d(map3d, size, plot):
 
 
 def main():
-    scram, unscram, size = read_file("./case/easy.txt")
+    scram, unscram, size = read_file("./case/hard.txt")
     print("Sorted: " + str(scram))
     print("\nUnsorted: " + str(unscram))
     
-    #plot3d(scram, size, 212)
-    #plot3d(unscram, size, 211)
-
-    map3d = scram
-                    
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection = "3d")
-    
-    ax.set_xlabel("x")
-    ax.set_ylabel("y") 
-    ax.set_zlabel("z")
-    ax.set_xlim3d(0,size)
-    ax.set_ylim3d(0,size) 
-    ax.set_zlim3d(0,size) 
-
-    alpha_base=0.5
-    
-    xpos = [] #x coordinates of each bar
-    ypos = [] #y coordinates of each bar
-    zpos = [] #z coordinates of each bar
-    colors = []
-    
-    for x in range(0, size):
-        for y in range(0, size):
-            for z in range(0, size):
-                if map3d[x][y][z] != None:
-                    xpos.append(x)
-                    ypos.append(y)
-                    zpos.append(z)
-                    
-                    r = map3d[x][y][z][0] / 255
-                    g = map3d[x][y][z][1] / 255
-                    b = map3d[x][y][z][2] / 255
-
-                    colors.append((r, g, b, alpha_base))
-
-    dx = np.ones(1) #width of each bar
-    dy = np.ones(1) #depth of each bar
-    dz = np.ones(1) #height of each bar
-
-    ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color=colors)
+    plot3d(scram, size, 111)
+    plot3d(unscram, size, 111)
 
     plt.gca().invert_xaxis()
     plt.show()
