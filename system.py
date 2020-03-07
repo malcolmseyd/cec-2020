@@ -152,11 +152,22 @@ def main():
     #print("Sorted: " + str(scram))
     #print("\nUnsorted: " + str(unscram))
     
-    plot3d(scram, size, 111)
-    plot3d(unscram, size, 111)
-
-    #plt.gca().invert_xaxis()
+    base_filename = sys.argv[1].split('/')[-1][:-4] 
+    
+    plt.ion()
     plt.show()
+
+    plot3d(scram, size, 111)
+    #plt.savefig(f"{base_filename}-scrambled.png")
+    
+    plt.draw()
+    plt.pause(1)
+    plt.clf()
+
+    plot3d(unscram, size, 111)
+    plt.draw()
+    plt.pause(1)
+    #plt.savefig(f"{base_filename}-unscrambled.png")
 
 
 if __name__ == "__main__":
