@@ -7,6 +7,7 @@ class Drone:
         self.z = 0
         self.max = n
         self.storageHopper = {}
+        self.inStorage = 0
         self.solved = False
         self.needs = []
         self.notNeeds = []
@@ -53,6 +54,7 @@ class Drone:
             self.storageHopper[color] = 1
 
         self.z = self.z - 1
+        self.inStorage = self.inStorage + 1
         if color == self.lastTouchedBlock:
             self.lastTouchedBlock = color;
             return 2
@@ -64,6 +66,7 @@ class Drone:
         count = count - 1
         self.storageHopper[color] = count
         self.z = self.z + 1
+        self.inStorage = self.inStorage - 1
         if color == self.lastTouchedBlock:
             self.lastTouchedBlock = color
             return 2
