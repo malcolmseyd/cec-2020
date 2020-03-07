@@ -40,7 +40,7 @@ def main():
     #plt.close()
 
     # pickup block
-    block_color = drone.scan(scram)
+    block_color = drone.scan()
 
     system.plot3d(drone.curr_image, size, 111, drone)
     plt.title(f"Drone scans the current block (we're displaying it as one above)\n Score: {score}")
@@ -58,7 +58,7 @@ def main():
     plt.savefig(f"{base_filename}.png")
     time.sleep(WAIT)
 
-    drone.moveup(scram)
+    drone.moveup()
     score += 1
 
     system.plot3d(drone.curr_image, size, 111, drone, False)
@@ -66,7 +66,7 @@ def main():
     plt.savefig(f"{base_filename}.png")
     time.sleep(WAIT)
 
-    drone.moveup(scram)
+    drone.moveup()
     score += 1
 
     system.plot3d(drone.curr_image, size, 111, drone, False)
@@ -74,7 +74,7 @@ def main():
     plt.savefig(f"{base_filename}.png")
     time.sleep(WAIT)
 
-    drone.moveup(scram)
+    drone.moveup()
     score += 1
 
     system.plot3d(drone.curr_image, size, 111, drone, False)
