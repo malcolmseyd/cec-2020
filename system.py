@@ -120,6 +120,11 @@ def plot3d(map3d, size, scale, drone: Drone):
     ypos = [] #y coordinates of each bar
     zpos = [] #z coordinates of each bar
     colors = []
+
+    dx = [] #height of each bar
+    dy = [] #height of each bar
+    dz = [] #height of each bar
+
     
     for x in range(0, size):
         for y in range(0, size):
@@ -132,23 +137,27 @@ def plot3d(map3d, size, scale, drone: Drone):
                     r = map3d[x][y][z][0] / 255
                     g = map3d[x][y][z][1] / 255
                     b = map3d[x][y][z][2] / 255
+                    
+                    dx.append(1)
+                    dy.append(1)
+                    dz.append(1)
 
                     colors.append((r, g, b, alpha_base))
 
-    dx = np.ones(1) #width of each bar
-    dy = np.ones(1) #depth of each bar
-    dz = np.ones(1) #height of each bar
+    #dx = np.ones(len(xpos)) #width of each bar
+    #dy = np.ones(len(xpos)) #depth of each bar
+    #dz = np.ones(len(xpos)) #height of each bar
 
     if drone:
-        xpos.append(drone.x)
-        ypos.append(drone.y)
-        zpos.append(drone.z+1)
+        xpos.append(drone.x+0.25)
+        ypos.append(drone.y+0.25)
+        zpos.append(drone.z+0.25)
         
         colors.append((0, 0, 0, 1))
 
-        np.append(dx, 0.5)
-        np.append(dy, 0.5)
-        np.append(dz, 0.5)
+        dx.append(0.5)
+        dy.append(0.5)
+        dz.append(0.5)
 
     ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color=colors)
 
@@ -196,7 +205,7 @@ def plot3d_highlight(map3d, size, scale, hx, hy, hz ):
 
     ax.bar3d(xpos, ypos, zpos, dx, dy, dz, color=colors)
 
-
+""" No main anymore
 def main():
     #print(sys.argv)
     if len(sys.argv) != 2:
@@ -227,3 +236,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+"""
