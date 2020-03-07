@@ -83,7 +83,7 @@ class Drone:
             return 3
     def scan(self):
         #using self x, y, z
-        return curr_image[self.x][self.y][self.z]
+        return self.curr_image[self.x][self.y][self.z]
 
 
 
